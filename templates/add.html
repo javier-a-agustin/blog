@@ -1,73 +1,97 @@
-{% include "header.tmpl" %}
+    <head>
+        <meta charset="utf-8" />
+        <title>Edit</title>
+    </head>
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{ url_for('static', filename='email.jpg')}}')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Añadir Blog</h1>
-          </div>
+    <body>
+        <div id="createPost">
+            <div>
+                <label>Titulo</label>
+                <input type="text" name="title" placeholder="Title" id="title">
+            </div>
+            <br>
+            <div>
+                <label>Subtitulo</label>
+                <input type="text" name="subtitle" placeholder="Subtitulo" id="subtitle">
+            </div>
+            <br>
+            <div>
+                <label>Autor</label>
+                <input type="text" name="author" placeholder="Autor" id="author">
+            </div>
+            <br>
+            <div>
+                <label>Fecha publicado</label>
+                <input type="datetime" name="date" placeholder="date" id="date">
+            </div>
+            <br>
+
+            <div>
+                <button onClick="addItem('#')">Title</button>
+                <button onClick="addItem('##')">Subtitle</button>
+                <button onClick="addItem('###')">3rd title</button>     
+                <button onClick="addItem('**   **')">B</button> 
+                <button onClick="addItem('*   *')">I</button> 
+                <button onClick="addItem('>')">></button> 
+                <button onClick="addItem('`   `')">Code</button> 
+                <button onClick="addItem('[titulo](link)')">Link</button> 
+                <button onClick="addItem('![alt text](image.jpg)')">Img</button> 
+                
+                
+
+            </div>
+            <label>Contenido</label>
+            <textarea id="text-input" oninput="this.editor.update()" cols="15" rows="3"></textarea>
         </div>
-      </div>
-    </div>
-  </header>
+    
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-<form name="sentMessage" id="contactForm" novalidate>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Titulo</label>
-              <input type="text" class="form-control" placeholder="Titulo" id="titulo" name="titulo" required data-validation-required-message="Ingrese un titulo.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
+        <div id="preview"> </div>
+    
 
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Subtitulo</label>
-              <input type="text" class="form-control" placeholder="Subtitulo" id="subtitulo" name="subtitulo" required data-validation-required-message="Ingrese un subtitulo.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
+    <style>
+        body{
+            background: black;
+            color:white;
 
-          <div class="control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label>Autor</label>
-              <input type="text" class="form-control" placeholder="Autor" id="autor" name="autor" required data-validation-required-message="Ingrese un autor.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
+        }
+        #createPost{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        #preview{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-          <div class="control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label>Fecha de publicaicon</label>
-              <input type="text" class="form-control" placeholder="Fecha de publicacion" id="fecha_de_publicacion" name="fecha_de_publicacion" required data-validation-required-message="Ingrese una fecha de publicacion.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
+    </style>
 
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Contenido</label>
-              <textarea rows="5" class="form-control" placeholder="Contenido" id="contenido" name="contenido" required data-validation-required-message="Ingrese el contenido del blog."></textarea>
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <br>
-          <div id="success"></div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+    <script src=" {{url_for('static', filename='markdown.js')}}"></script>
 
-  <hr>
+    <script type="text/javascript">
 
-  {% include "footer.tmpl" %}
+        function addItem(x){
+            var e = document.getElementById('text-input');
+            e.value+=x;
+        }
+        
+        function Editor(input, preview) {
+            this.update = function () {
+                preview.innerHTML = markdown.toHTML(input.value);
+            };
+            input.editor = this;
+            this.update();
+        }
+        var $ = function (id) { return document.getElementById(id); };
+        new Editor($("text-input"), $("preview"));
+
+    </script>
+
+    </body>
+
+</html>

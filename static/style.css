@@ -414,25 +414,4 @@ footer .copyright {
   padding: 25px 35px;
 }
 
-html {
-  --bg: #FCFCFC;
-  --bg-panel: #EBEBEB;
-  --color-headings: #0077FF;
-  --color-text: #333333;
-}
-
-html[data-theme=dark] {
-  --bg: #333333;
-  --bg-panel: #434343;
-  --color-headings: #3694FF;
-  --color-text: #B5B5B5;
-}
-
-.container {
-  background-color: var(--bg);
-}
-.container h1, .container h2, .container h3, .container h4, .container p, .container a {
-  color: var(--color-text);
-}
-
-/*# sourceMappingURL=bootstrap.min.css.map */
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,5 @@
+          <li class="nav-item">
+            <div class="toggle-container">
+                <input type="checkbox" id="switch" name="theme" /><label for="switch">Toggle</label>
+            </div>
+          </li>
