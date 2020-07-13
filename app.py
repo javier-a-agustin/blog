@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import sys
 import uri 
-#from flasktext.markdown import Markdown
+from flaskext.markdown import Markdown
 
 from datetime import datetime
 import locale
@@ -10,9 +10,9 @@ import locale
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 app = Flask(__name__)
-#Markdown(app)
+Markdown(app)
+#login_manager = LoginManager()
 
-# new db postgres://udharpzdqpmawc:2ff2b461f8114b3dd92347f937c680520ccbd2fe56de5f3fdf6028586c41fe15@ec2-54-236-169-55.compute-1.amazonaws.com:5432/d8971805l1evh0
 app.config['SQLALCHEMY_DATABASE_URI'] = uri.uri()
 
 db = SQLAlchemy(app)
@@ -46,27 +46,58 @@ def post(post_id):
 
     return render_template("post.html", post=post)
 
+"""
 @app.route("/add")
 def add():
     return render_template("add.html")
+"""
 
-@app.route('/addpost', methods=['POST'])
+@app.route('/add', methods=['POST', 'GET'])
 def addpost():
-    title = request.form['title']
-    subtitle = request.form['subtitle']
-    author = request.form['author']
-    content = request.form['content']
+    if request.method == 'GET':
+        return render_template("add.html")
+    else:
+        if request.form['']
+        title = request.form['title']
+        subtitle = request.form['subtitle']
+        author = request.form['author']
+        content = request.form['content']
 
-    post = blogs(title=title, subtitle=subtitle, author=author, content=content, date_posted=datetime.now())
+        post = blogs(title=title, subtitle=subtitle, author=author, content=content, date_posted=datetime.now())
 
-    db.session.add(post)
-    db.session.commit()
+        db.session.add(post)
+        db.session.commit()
 
-    return redirect(url_for('index'))
+        return redirect(url_for('index'))
 
-@app.route("/meter", methods=['POST', 'GET'])
-def meter():
-    return render_template("meter.html")
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    return render_template("login.html")
+
+"""# Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us, and we use a custom LoginForm to validate.
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Login and validate the user.
+        # user should be an instance of your `User` class
+        login_user(user)
+
+        flask.flash('Logged in successfully.')
+
+        next = flask.request.args.get('next')
+        # is_safe_url should check if the url is safe for redirects.
+        # See http://flask.pocoo.org/snippets/62/ for an example.
+        if not is_safe_url(next):
+            return flask.abort(400)
+
+        return flask.redirect(next or flask.url_for('index'))
+    return flask.render_template('login.html', form=form)"""
+
+
 
 if __name__ == '__main__':
  app.run(debug=True)

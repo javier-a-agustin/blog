@@ -1,32 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit</title>
+        <link rel="stylesheet" href='{{ url_for('static', filename='add.css')}}'>
     </head>
 
     <body>
-        <div id="createPost">
-            <div>
-                <label>Titulo</label>
-                <input type="text" name="title" placeholder="Title" id="title">
-            </div>
-            <br>
-            <div>
-                <label>Subtitulo</label>
-                <input type="text" name="subtitle" placeholder="Subtitulo" id="subtitle">
-            </div>
-            <br>
-            <div>
-                <label>Autor</label>
-                <input type="text" name="author" placeholder="Autor" id="author">
-            </div>
-            <br>
-            <div>
-                <label>Fecha publicado</label>
-                <input type="datetime" name="date" placeholder="date" id="date">
-            </div>
-            <br>
-
-            <div>
+        <div id="container">
+            
+            <div id="text-editor-buttons"> 
                 <button onClick="addItem('#')">Title</button>
                 <button onClick="addItem('##')">Subtitle</button>
                 <button onClick="addItem('###')">3rd title</button>     
@@ -36,47 +20,44 @@
                 <button onClick="addItem('`   `')">Code</button> 
                 <button onClick="addItem('[titulo](link)')">Link</button> 
                 <button onClick="addItem('![alt text](image.jpg)')">Img</button> 
-                
-                
-
             </div>
-            <label>Contenido</label>
-            <textarea id="text-input" oninput="this.editor.update()" cols="15" rows="3"></textarea>
+
+            <form method="POST" id="createPost">
+                <div>
+                    <label>Titulo</label>
+                    <input type="text" name="title" placeholder="Title" id="title">
+                </div>
+                <br>
+                <div>
+                    <label>Subtitulo</label>
+                    <input type="text" name="subtitle" placeholder="Subtitulo" id="subtitle">
+                </div>
+                <br>
+                <div>
+                    <label>Autor</label>
+                    <input type="text" name="author" placeholder="Autor" id="author">
+                </div>
+                <br>
+    
+                
+                <label>Contenido</label>
+    
+                <textarea id="content" name="content" oninput="this.editor.update()" cols="120" rows="15"></textarea>
+                <button type="submit">Añadir</button>
+            </form>
+            
         </div>
     
+        <hr class="separador">
 
         <div id="preview"> </div>
-    
-
-    <style>
-        body{
-            background: black;
-            color:white;
-
-        }
-        #createPost{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        #preview{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-    </style>
 
     <script src=" {{url_for('static', filename='markdown.js')}}"></script>
 
     <script type="text/javascript">
 
         function addItem(x){
-            var e = document.getElementById('text-input');
+            var e = document.getElementById('content');
             e.value+=x;
         }
         
@@ -88,7 +69,7 @@
             this.update();
         }
         var $ = function (id) { return document.getElementById(id); };
-        new Editor($("text-input"), $("preview"));
+        new Editor($("content"), $("preview"));
 
     </script>
 
