@@ -1,6 +1,6 @@
 __pycache__
 .idea
 venv
-flasl_session
+flask_session
 Procfile
 uri.py 
