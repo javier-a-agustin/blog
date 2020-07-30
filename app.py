@@ -8,7 +8,7 @@ from flaskext.markdown import Markdown
 from datetime import datetime
 import locale
 
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+#locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 app = Flask(__name__)
 
@@ -97,5 +97,5 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
- app.run(debug=True)
+ app.run()
 
