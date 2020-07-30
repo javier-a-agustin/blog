@@ -1,3 +1,6 @@
 __pycache__
 .idea
 venv
+flasl_session
+Procfile
+uri.py 
