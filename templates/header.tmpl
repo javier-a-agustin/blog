@@ -1,7 +1,7 @@
 
 {% block header %}
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" class="tema-light>
 
 <head>
 
@@ -10,9 +10,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>GauchData</title>
+  <title>Gauchada</title>
 
-  <link rel="icon" href="{{url_for('static', filename='chart-area-solid.svg')}}">
+  <link rel="icon" href="{{url_for('static', filename='icon.svg')}}">
   <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -25,6 +25,8 @@
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet">
 
+  <script src=" {{ url_for('static', filename='index.js') }}"></script>
+
 
 </head>
 
@@ -33,7 +35,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="{{url_for('index')}}">Javier Fernandez</a>
+      <a class="navbar-brand" href="{{url_for('index')}}">Gauchada</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -50,53 +52,18 @@
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('contact')}}">Contactame</a>
           </li>
+          <li class="nav-item">
+            <div class="toggle-container">
+              <input type="checkbox" id="switch" name="theme" onclick="toggleTheme()"/><label for="switch">Toggle</label>
+            </div>
+
+
+            
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
-    <style>
-        input[type=checkbox]{
-            height: 0;
-            width: 0;
-            visibility: hidden;
-        }
-
-        label {
-            cursor: pointer;
-            text-indent: -9999px;
-            width: 52px;
-            height: 27px;
-            background: black;
-            float: right;
-            border-radius: 100px;
-            position: relative;
-        }
-
-        label:after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 90px;
-            transition: 0.3s;
-        }
-
-        input:checked + label {
-            background: #2c003e;
-        }
-
-        input:checked + label:after {
-            left: calc(100% - 5px);
-            transform: translateX(-100%);
-        }
-
-        label:active:after {
-            width: 45px;
-        }
-
-    </style>
+    
 {% endblock %}

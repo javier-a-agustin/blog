@@ -1,20 +1,18 @@
   {% include "header.tmpl" %}
-  <!-- Page Header -->
   <header class="masthead" style="background-image: url('{{ url_for('static', filename='ds.jpg')}}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Javier Fernandez</h1>
-            <span class="subheading">Blog con proyectos personales.</span>
+            <h1>Gauchada</h1>
+            <span class="subheading">Inquietudes sobre programacion.</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
@@ -30,7 +28,7 @@
             </h3>
           </a>
           <p class="post-meta">Publicado por
-            <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-4a92b2172/"> {{ post.author }}</a>
+            <a href="https://www.linkedin.com/in/javier-a-agustin/"> {{ post.author }}</a>
             {{ post.date_posted.strftime('%d' + ' de ' + '%B' ' del ' + '%Y') }}</p>
         </div>
         <hr>

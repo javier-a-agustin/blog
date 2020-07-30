@@ -22,7 +22,6 @@ input{
     color: #f1f1f1;
     box-sizing: inherit;
     border-width: 0;
-    transform: uppercase;
     border-radius: 10px;
 }
 ::-webkit-input-placeholder{

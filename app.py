@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import sys
 import uri 
@@ -10,13 +11,17 @@ import locale
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 app = Flask(__name__)
+
 Markdown(app)
-#login_manager = LoginManager()
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+
+Session(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = uri.uri()
 
 db = SQLAlchemy(app)
-
 
 class blogs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,10 +31,13 @@ class blogs(db.Model):
     date_posted = db.Column(db.DateTime)
     content = db.Column(db.Text)
 
+class users(db.Model):
+    name = db.Column(db.String(200), primary_key=True)
+    password = db.Column(db.String(200))
+
 @app.route("/")
 def index():
     posts = blogs.query.all()
-
     return render_template("index.html", posts=posts)
 
 @app.route("/about")
@@ -43,24 +51,19 @@ def contact():
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = blogs.query.filter_by(id=post_id).one()
-
     return render_template("post.html", post=post)
-
-"""
-@app.route("/add")
-def add():
-    return render_template("add.html")
-"""
 
 @app.route('/add', methods=['POST', 'GET'])
 def addpost():
     if request.method == 'GET':
-        return render_template("add.html")
+        if session.get('name') is None:
+            return redirect(url_for('login'))
+        else:
+            return render_template("add.html")
     else:
-        if request.form['']
         title = request.form['title']
         subtitle = request.form['subtitle']
-        author = request.form['author']
+        author = "Javier Fernandez"
         content = request.form['content']
 
         post = blogs(title=title, subtitle=subtitle, author=author, content=content, date_posted=datetime.now())
@@ -72,32 +75,26 @@ def addpost():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    return render_template("login.html")
+    if request.method == "GET":
+        if session.get('name') is None:
+            return render_template("login.html")
+        else:
+            return redirect(url_for('addpost'))
+    else:
+        name = request.form['name']
+        password = request.form['password']
+        
+        user = users.query.filter_by(name=name, password=password).all()
+        if user == []:
+            return redirect(url_for('login')) 
+        else:
+            session['name'] = name
+            return redirect(url_for('addpost'))
 
-"""# Login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-        login_user(user)
-
-        flask.flash('Logged in successfully.')
-
-        next = flask.request.args.get('next')
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        if not is_safe_url(next):
-            return flask.abort(400)
-
-        return flask.redirect(next or flask.url_for('index'))
-    return flask.render_template('login.html', form=form)"""
-
-
+@app.route("/logout")
+def logout():
+    session['name'] = None
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
  app.run(debug=True)

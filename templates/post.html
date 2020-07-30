@@ -1,11 +1,11 @@
 
   {% include "header.tmpl" %}
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{ url_for('static', filename='inter.jpg')}}')">
+  <header class="masthead" style="background-image: url('{{ url_for('static', filename='ds.jpg')}}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="col-lg-8 col-md-10 mx-auto contenido">
           <div class="post-heading">
             <h1>{{ post.title }}</h1>
             <h2 class="subheading">{{ post.subtitle }}</h2>
@@ -30,5 +30,13 @@
   </article>
 
   <hr>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      htmlTag = document.querySelector('img');
+      console.log(htmlTag);
+      htmlTag.classList.add('img-fluid');
+    });
+  </script>
 
   {% include "footer.tmpl" %}
